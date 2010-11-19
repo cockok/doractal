@@ -1,0 +1,53 @@
+<html>
+ <head>
+  <title>FAKE-DORA FRACTAL</title>
+  <script type="text/javascript">
+   function drawCircle(context, x, y, r) {
+     context.beginPath();
+     context.arc(x, y, r, 0, Math.PI * 2, true);
+     context.stroke();
+   };
+   function fillCircle(context, x, y, r) {
+     context.beginPath();
+     context.arc(x, y, r, 0, Math.PI * 2, true);
+     context.fill();
+   };
+   function drawLine(context, x1, y1, x2, y2) {
+     context.beginPath();
+     context.moveTo(x1, y1);
+     context.lineTo(x2, y2);
+     context.stroke();
+   };
+   function draw_fakedora(context, x, y, r) {
+     if (r < 5) {
+      drawCircle(context, x-r/4, y-r*0.1, r/4);
+      drawCircle(context, x+r/4, y-r*0.1, r/4);
+      return;
+     }
+     drawCircle(context, x,y,r);
+     drawCircle(context, x,y+r*0.1,r*0.9);
+     fillCircle(context, x, y+r*0.11, r/8);
+     drawLine(context, x, y+r*0.1, x, y+r*0.8);
+
+     draw_fakedora(context, x-r/3, y-r*0.2, r/3);
+     draw_fakedora(context, x+r/3, y-r*0.2, r/3);
+   };
+   function draw_fakedora_fractal(canvasId) {
+     var canvas = document.getElementById(canvasId);
+     var l = canvas.width < canvas.height ? canvas.width : canvas.height;
+     var r = l/2;
+     var x = canvas.width/2;
+     var y = canvas.height/2;
+     draw_fakedora(canvas.getContext('2d'), x, y, r); 
+   };
+
+   
+  </script>
+ </head>
+ <body onload="draw_fakedora_fractal('c1');">
+  <center>
+   <h1>FAKE-DORA FRACTAL</h1>
+   <canvas id="c1" width="800" height="800" ></canvas>
+  </center>
+ </body>
+</html>
